@@ -20,3 +20,4 @@ def main():
         handle_add(command[0])
     elif command_len == 2:
         handle_add(command[0], command[1])
+        
