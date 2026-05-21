@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import os
 
@@ -20,4 +21,6 @@ def main():
         handle_add(command[0])
     elif command_len == 2:
         handle_add(command[0], command[1])
-        
+
+if __name__ == "__main__":
+    main()
