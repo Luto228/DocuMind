@@ -1,6 +1,10 @@
 import sqlite3
 
-DB_PATH = "data/db_text.db"
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+DB_PATH = str(PROJECT_ROOT / "data" / "db_text.db")
 
 def create():
     conn = sqlite3.connect(DB_PATH)
