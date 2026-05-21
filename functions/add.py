@@ -4,6 +4,8 @@ from pathlib import Path
 
 from db_services.db_text import create, save_info
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
 def handle_add(file_name: str, custom_path = None):
     home_dir = Path.home()
     if custom_path is None:
@@ -18,8 +20,8 @@ def handle_add(file_name: str, custom_path = None):
         print(f"Please write correct name")
         return
     print(f"✅i found {currently_file_name} file in {file_custom_path}✅")
-    DocuMind_docs_path = Path("./docs")
-    DocuMind_docs_path.mkdir(exist_ok = True)
+    DocuMind_docs_path = PROJECT_ROOT / "docs"
+    DocuMind_docs_path.mkdir(parents=True, exist_ok=True)
     final_file_path = DocuMind_docs_path / currently_file_name
     shutil.copy(file_path, final_file_path)
     text_inside = final_file_path.read_text(encoding="utf-8")
