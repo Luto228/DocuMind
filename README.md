@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Premium-blueviolet?style=for-the-badge" alt="Status">
+  <img src="https://img.shields.io/badge/Status-Active-blueviolet?style=for-the-badge" alt="Status">
   <img src="https://img.shields.io/badge/API-Gemini-orange?style=for-the-badge" alt="Gemini API">
   <img src="https://img.shields.io/badge/Made%20with-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/Made%20with-Love-red?style=for-the-badge&logo=heart&logoColor=white" alt="Made with love">
@@ -7,68 +7,96 @@
 
 # DocuMind
 
-DocuMind is a local CLI assistant for working with your personal text notes. It helps automatically index files, store them in a SQLite database, and quickly find the right information by meaning.
+DocuMind is a local CLI assistant for managing your personal notes. It copies files into a local `docs` folder, stores their content in SQLite, and now supports asking questions to Gemini using your saved documents.
 
-## What works so far
+## ✨ What is already available
 
-### 1. `add`
+### 1. `Docu add`
 
-Command: `DocuMind add file_name.txt`
+Use:
+
+```bash
+Docu add my_notes.txt
+Docu add my_notes.txt /path/to/folder
+```
 
 What it does:
-- Finds the file on the Desktop by default
-- Supports a custom file path
+- Finds the file on your Desktop by default
+- Supports a custom path
 - Copies the file into the project `docs` folder
-- Reads the entire file text and saves it to SQLite
+- Saves the text into the local SQLite database
 
-Why it matters:
-- This is the indexing stage: knowledge is loaded into the bot's memory.
+### 2. `Docu ask`
 
-> Currently only part of the `add` functionality is implemented, but the rest will definitely be added.
+Use:
 
-## Planned features
+```bash
+Docu ask my_notes.txt "What did I write about Python?"
+```
 
-### 2. `search`
+What it does:
+- Reads the saved document from SQLite
+- Sends the file content and your question to Gemini
+- Returns a short answer based on your note
 
-Command: `DocuMind search "what did I write about configuring alias in bashrc?"`
+> The `ask` command uses `google.generativeai` and `python-dotenv`.
 
-What it will do:
-- Search not only exact words, but documents by meaning
-- Use SQLite to find relevant text
-- Return the relevant pieces of information from your notes
+## 📦 Installation
 
-### 3. AI conversation
+Install the required packages:
 
-What it will do:
-- You ask a question about your documents
-- The bot finds relevant passages in the database
-- It creates a prompt for the neural model using the found text
-- The model answers using only the content from your files
+```bash
+pip install google-generativeai python-dotenv
+```
 
-Why it matters:
-- Everything stays local and under your control
-- Your notes are neatly organized and searchable
-- No need to open dozens of files to find one line of text
+Create a `.env` file in the project root:
 
-## Why DocuMind
+```env
+GEMINI_API_KEY=your_api_key_here
+```
 
-- Local knowledge base on SQLite
-- Meaning-based search, not just keyword matching
-- LLM integration for smart answers
-- Focused on making personal note storage easy
+> [!TIP]
+> Keep your API key in `.env` and never commit it to Git.
 
-## Project structure
+## 🚀 Quick start
 
-- `main.py` — entry point
-- `add.py` — `add` command
-- `test.py` — tests / experimental checks
+```bash
+python main.py add example.txt
+python main.py ask example.txt "What is this file about?"
+```
 
-## Status
+## 🛠️ Project structure
 
-- `add` — partially implemented
-- `search` — in development
-- AI integration — planned
+- `main.py` — CLI entry point
+- `functions/add.py` — file import logic
+- `functions/ask.py` — question routing
+- `core/ai_brain.py` — Gemini integration
+- `db_services/db_text.py` — SQLite storage
+- `docs/` — copied notes
+- `test.py` — experimental Gemini test script
 
-## Contacts
+## 🧭 Current status
 
-If you want to help with development, feel free to open pull requests and share ideas!
+- `add` — implemented
+- `ask` — implemented
+- `Docu list` — planned for the next update
+- `Docu delete` — planned for the next update
+
+## 🔮 What will be added next
+
+- `Docu list` — show which files are already added
+- `Docu delete` — remove documents that are no longer needed
+- Better search/output formatting for commands and answers
+
+> [!TIP]
+> In the next update, the CLI will become even more convenient for managing your document library.
+
+## 📌 Notes
+
+- All notes are stored locally in SQLite
+- Gemini answers are generated only from saved documents
+- The project is designed for personal knowledge management, not for cloud sync
+
+## 🤝 Contribution
+
+If you want to help improve DocuMind, feel free to open an issue or pull request.
