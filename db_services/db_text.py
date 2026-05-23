@@ -20,7 +20,7 @@ def create():
             )''')
     conn.close()
 
-def save_info(title, content):
+def save_info(title: str, content: str):
     conn = sqlite3.connect(DB_PATH)
 
     with conn:
@@ -30,3 +30,14 @@ def save_info(title, content):
             (title, content)
         )
     conn.close()
+
+def find_file(title: str):
+    conn = sqlite3.connect(DB_PATH)
+    with conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT content FROM file_info WHERE title = ?", (title,))
+        row = cursor.fetchone()
+        if row:
+            return row[0]
+        else:
+            return None
